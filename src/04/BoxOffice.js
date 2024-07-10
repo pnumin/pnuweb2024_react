@@ -9,7 +9,7 @@ export default function BoxOffice() {
   useEffect(() => {
     let url = 'https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?';
     url = url + `key=${process.env.REACT_APP_MV}`;
-    url = url + `&targetDt=20240709`;
+    url = url + `&targetDt=20240708`;
 
     console.log(url);
 
@@ -26,7 +26,8 @@ export default function BoxOffice() {
 
     console.log(tdata)
     let tm = tdata.map(item => 
-    <tr className="bg-white border-b hover:bg-gray-50 font-bold">
+    <tr className="bg-white border-b hover:bg-gray-50 font-bold"
+        key={item.movieCd}>
       <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {item.rank}
       </th>
@@ -40,7 +41,9 @@ export default function BoxOffice() {
         {parseInt(item.audiCnt).toLocaleString()}
       </td>
       <td className="px-6 py-2">
-        {item.audiInten}
+        {parseInt(item.rankInten) > 0 ? <span className="text-red-600">▲</span>
+                            : parseInt(item.rankInten) < 0 ? <span className="text-blue-600">▼</span> : '-'}
+        {parseInt(item.rankInten) !=0 && Math.abs(item.rankInten)}
       </td>
     </tr>);
 
