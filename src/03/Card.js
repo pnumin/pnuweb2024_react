@@ -1,6 +1,22 @@
-export default function Card({ imgSrc, title, content }) {
-  let n = 0 ;
+import { useState, useEffect } from "react";
 
+export default function Card({ imgSrc, title, content }) {
+  //컴포넌트 로컬변수
+  // let n = 0 ;
+  const [n, setN] = useState(0) ;
+
+  const handleClick = () => {
+    // n = n + 1 ;
+    setN(n+1) ;
+  }
+
+  //컴포넌트 생성시 한번만 실행
+  // useEffect(()=>{},[]);
+
+  //특정 상태 변수가 변경 될때 마다 실행
+  useEffect(()=>{
+    console.log(n)
+  }, [n]);
   return (
     <div className="flex justify-center items-top
                     w-full h-50 border border-slate-300
@@ -19,10 +35,13 @@ export default function Card({ imgSrc, title, content }) {
             {content}
         </p>
         <p className="w-full text-sm text-slate-900 text-right">
-          <span className="text-lg font-bold cursor-pointer">
+          <span className="text-lg font-bold cursor-pointer"
+                onClick={handleClick}>
             ❤️ 좋아요
           </span> 
-          <span>{n}</span>
+          <span className="text-lg font-bold ml-5">
+            {n}
+          </span>
         </p>
       </div>
     </div>
