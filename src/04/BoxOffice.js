@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function BoxOffice() {
   //json data 저장변수
   const [tdata, setTdata] = useState([]);
+  const [tags, setTags] = useState([]);
 
   //컴포넌트 생성시
   useEffect(() => {
@@ -24,86 +25,58 @@ export default function BoxOffice() {
     if (tdata.length == 0) return;
 
     console.log(tdata)
+    let tm = tdata.map(item => 
+    <tr className="bg-white border-b hover:bg-gray-50 font-bold">
+      <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {item.rank}
+      </th>
+      <td className="px-6 py-2">
+        {item.movieNm}
+      </td>
+      <td className="px-6 py-2 text-right">
+        {parseInt(item.salesAmt).toLocaleString()}
+      </td>
+      <td className="px-6 py-2  text-right">
+        {parseInt(item.audiCnt).toLocaleString()}
+      </td>
+      <td className="px-6 py-2">
+        {item.audiInten}
+      </td>
+    </tr>);
+
+    setTags(tm) ;  
+
   }, [tdata]);
 
   return (
-    <div className="text-black">
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Product name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Color
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">
-                Silver
-              </td>
-              <td className="px-6 py-4">
-                Laptop
-              </td>
-              <td className="px-6 py-4">
-                $2999
-              </td>
-              <td className="px-6 py-4 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">
-                White
-              </td>
-              <td className="px-6 py-4">
-                Laptop PC
-              </td>
-              <td className="px-6 py-4">
-                $1999
-              </td>
-              <td className="px-6 py-4 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">
-                Black
-              </td>
-              <td className="px-6 py-4">
-                Accessories
-              </td>
-              <td className="px-6 py-4">
-                $99
-              </td>
-              <td className="px-6 py-4 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div className="text-black w-10/12
+                    relative overflow-x-auto shadow-md sm:rounded-lg
+                    ">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead className="text-lg text-gray-50 uppercase bg-black">
+          <tr>
+            <th scope="col" className="px-6 py-3">
+              순위
+            </th>
+            <th scope="col" className="px-6 py-3">
+              영화명
+            </th>
+            <th scope="col" className="px-6 py-3">
+              매출액
+            </th>
+            <th scope="col" className="px-6 py-3">
+              관객수
+            </th>
+            <th scope="col" className="px-6 py-3">
+              증감
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {tags}
+        </tbody>
+      </table>
+
 
     </div>
   )
