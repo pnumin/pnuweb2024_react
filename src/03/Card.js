@@ -1,5 +1,6 @@
 export default function Card({ imgSrc, title, content }) {
- 
+  let n = 0 ;
+
   return (
     <div className="flex justify-center items-top
                     w-full h-50 border border-slate-300
@@ -18,7 +19,10 @@ export default function Card({ imgSrc, title, content }) {
             {content}
         </p>
         <p className="w-full text-sm text-slate-900 text-right">
-          ❤️ 좋아요 0
+          <span className="text-lg font-bold cursor-pointer">
+            ❤️ 좋아요
+          </span> 
+          <span>{n}</span>
         </p>
       </div>
     </div>
