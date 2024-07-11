@@ -4,6 +4,20 @@ export default function BoxOffice() {
   //json data 저장변수
   const [tdata, setTdata] = useState([]);
   const [tags, setTags] = useState([]);
+  const [selMv, setSelMv] = useState('');
+
+  //영화가 선택되었을때
+  const handleSelMv = (mv) => {
+    console.log(mv)
+    let tm = <> 
+             <span className="mr-2">{mv.movieNm}</span>
+             <span className="mr-2 text-white">개봉일 : {mv.openDt}</span>
+             <span className="mr-2 text-white">
+              누적관객수 : {parseInt(mv.audiAcc).toLocaleString()}
+             </span>
+             </>
+    setSelMv(tm)
+  }
 
   //컴포넌트 생성시
   useEffect(() => {
@@ -26,7 +40,8 @@ export default function BoxOffice() {
 
     console.log(tdata)
     let tm = tdata.map(item => 
-    <tr className="bg-white border-b hover:bg-gray-50 font-bold"
+    <tr className="bg-white border-b hover:bg-gray-50 font-bold hover:cursor-pointer"
+        onClick={() => handleSelMv(item)}
         key={item.movieCd}>
       <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {item.rank}
@@ -55,6 +70,15 @@ export default function BoxOffice() {
     <div className="text-black w-10/12
                     relative overflow-x-auto shadow-md sm:rounded-lg
                     ">
+      <form className="flex justify-end items-center
+                      mb-2
+                       text-lg">
+        <label htmlFor="dt" className="text-sm mr-5 font-bold">
+          날짜선택
+        </label>
+        <input type='date' id='dt' 
+               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 "/>
+      </form>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-lg text-gray-50 uppercase bg-black">
           <tr>
@@ -79,7 +103,11 @@ export default function BoxOffice() {
           {tags}
         </tbody>
       </table>
-
+      <div className="flex justify-center items-center
+                      px-6 py-2 font-bold
+                      text-lg bg-black text-yellow-300">
+        {selMv == '' ? '영화정보' : selMv}
+      </div>
 
     </div>
   )
