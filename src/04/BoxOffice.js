@@ -1,10 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function BoxOffice() {
   //json data 저장변수
   const [tdata, setTdata] = useState([]);
   const [tags, setTags] = useState([]);
   const [selMv, setSelMv] = useState('');
+  const inRef = useRef();
+
+  //데이터가져오기
+  const getData = () => {
+    let tmDt = inRef.current.value.replaceAll('-','')
+    let url = 'https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?';
+    url = url + `key=${process.env.REACT_APP_MV}`;
+    url = url + `&targetDt=${tmDt}`;
+
+    console.log(url);
+
+    //fetch함수를 이용하여 오픈API 데이터 불러오기
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => setTdata(data.boxOfficeResult.dailyBoxOfficeList))
+      ;
+  }
+
+  //날짜가 선택되었을때
+  const handelSelDt = (e) => {
+    e.preventDefault();
+    console.log(inRef.current.value)
+    getData();
+  }
 
   //영화가 선택되었을때
   const handleSelMv = (mv) => {
@@ -21,17 +45,7 @@ export default function BoxOffice() {
 
   //컴포넌트 생성시
   useEffect(() => {
-    let url = 'https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?';
-    url = url + `key=${process.env.REACT_APP_MV}`;
-    url = url + `&targetDt=20240708`;
-
-    console.log(url);
-
-    //fetch함수를 이용하여 오픈API 데이터 불러오기
-    fetch(url)
-      .then(resp => resp.json())
-      .then(data => setTdata(data.boxOfficeResult.dailyBoxOfficeList))
-      ;
+    
   }, []);
 
   //tdata가 변경될때 실행
@@ -76,7 +90,9 @@ export default function BoxOffice() {
         <label htmlFor="dt" className="text-sm mr-5 font-bold">
           날짜선택
         </label>
-        <input type='date' id='dt' 
+        <input type='date' id='dt'
+               ref={inRef} 
+               onChange={handelSelDt}
                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5 "/>
       </form>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
