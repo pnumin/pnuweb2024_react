@@ -23,7 +23,7 @@ export default function Card({ imgSrc, title, content }) {
                     p-3">
       <div className="w-1/3 h-50 flex 
                       justify-center items-start">
-        <img src={imgSrc} />
+        <img src={imgSrc} alt={title}/>
       </div>
       <div className="w-2/3 h-50 flex flex-col
                       ml-5
